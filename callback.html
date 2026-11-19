@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="referrer" content="no-referrer">
+<title>lamvideo – Kết nối TikTok</title>
+<style>body{font-family:system-ui,sans-serif;max-width:640px;margin:40px auto;padding:0 16px;line-height:1.6;color:#222}
+code{display:block;word-break:break-all;background:#f4f4f5;padding:12px;border-radius:8px;font-size:15px}
+button{margin-top:12px;padding:10px 18px;border:0;border-radius:8px;background:#e11d48;color:#fff;font-size:15px;cursor:pointer}</style></head>
+<body>
+<h1>Kết nối TikTok</h1>
+<div id="out">Đang đọc mã...</div>
+<script>
+var p = new URLSearchParams(location.search), out = document.getElementById('out');
+if (p.get('code')) {
+  out.innerHTML = '<p>Đã đồng ý. Sao chép mã dưới đây và gửi cho Claude trong vài phút tới (mã hết hạn nhanh):</p><code id="c"></code><button id="b">Sao chép mã</button>';
+  document.getElementById('c').textContent = p.get('code');
+  document.getElementById('b').onclick = function () {
+    navigator.clipboard.writeText(p.get('code')).then(function () { document.getElementById('b').textContent = 'Đã sao chép'; });
+  };
+} else if (p.get('error')) {
+  out.textContent = 'TikTok báo lỗi: ' + p.get('error') + ' – ' + (p.get('error_description') || '');
+} else {
+  out.textContent = 'Trang này dùng để nhận mã khi đăng nhập TikTok. Không có mã nào trong địa chỉ.';
+}
+</script>
+</body></html>
